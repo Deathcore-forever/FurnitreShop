@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <link rel="shortcut icon" href="/media/basket.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <style>
+    </style>
+
+</head>
+<body>
+
+{% include 'inc/header.html' %}
+
+<section class="w-100 px-3 py-5" style="background-color: #eee; border-radius: .5rem .5rem 0 0;">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-11">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-normal mb-0 text-black">Корзина</h3>
+            </div>
+
+            {% for item in basket %}
+                <div class="card rounded-3 mb-4">
+                <div class="card-body p-4">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <img src="/media/{{ item.fur.photo }}"
+                                 class="img-fluid rounded-3" alt="Фото товара">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <p class="lead fw-normal mb-2">{{ item.fur.name_fur }}</p>
+                            <p>Цвет: {{ item.fur.color }}, Вес: {{ item.fur.weight }}кг</p>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+
+{#                            <input id="form1" min="0" name="quantity" value="{{ item.quantity }}" type="number"#}
+{#                                   class="form-control form-control-sm" readonly="readonly"/>#}
+                            <p class="lead fw-normal mb-2">{{ item.quantity }} шт.</p>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                            <h5 class="mb-0">{{ item.fur.price }}&nbsp;₽<br></br>Сумма: {% widthratio item.fur.price 1 item.quantity %}&nbsp;₽</h5>
+                        </div>
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <a href="/basket-delete/{{ item.id }}" class="text-danger" style="border: none; background-color: inherit;">
+                                <i class="fas fa-trash fa-lg" style="color: #0d6efd;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <form method="post">
+                <div class="card rounded-3 mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h5>Итог: {{ amount }}&nbsp;₽</h5>
+                            </div>
+                            {#                        <div class="col-md-2 col-lg-2 col-xl-2">#}
+                            {#                            <p> Адрес доставки:</p>#}
+                            {#                            <input id="form1" min="0" name="quantity" value="" type="text">#}
+                            {#                        </div>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body p-4"style="text-align: center;">
+                        <button class="btn btn-primary btn-block btn-lg" type="submit">Оплатить</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</section>
+
+{% include 'inc/footer.html' %}
+
+</body>
+</html>

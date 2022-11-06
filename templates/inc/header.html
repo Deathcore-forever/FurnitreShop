@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+<style>
+    .new-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            justify-content:space-between;
+        }
+
+        .header-a{
+            padding-right: 1rem !important;
+            padding-left: 1rem !important;
+        }
+
+        .header-a:hover{
+            color: #0d6efd !important;
+            scale: 120%;
+        }
+        .logo {
+            width: 45px;
+            height: 45px;
+        }
+</style>
+
+<div class="container">
+    <header class="new-header py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="/media/logo.png" class="logo">
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link link-dark header-a">Главная</a></li>
+
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'basket' %}" class="nav-link link-dark header-a">Корзина</a></li>
+                {% endif %}
+
+{#            <li><a href="#" class="nav-link link-dark header-a">Цены</a></li>#}
+            <li><a href="{% url 'catalog' %}" class="nav-link link-dark header-a">Каталог</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+
+            {% if request.user.is_authenticated %}
+                <div>
+                    <a href="{% url 'profile' %}" class="link-dark" style="text-decoration: none;"><i class="bi bi-person-circle"></i> {{ user.username }}</a>
+                    <br>
+                    <a href="{% url 'logout' %}" style="color:#212529; text-decoration: none;">Выход</a>
+                </div>
+            {% else %}
+                <a type="button" href="{% url 'login' %}" class="btn btn-outline-primary me-2">Вход</a>
+                <a type="button" href="{% url 'signup' %}" class="btn btn-primary">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+</div>
